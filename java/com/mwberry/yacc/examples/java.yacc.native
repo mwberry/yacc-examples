@@ -1,0 +1,70 @@
+%{
+
+// This appears to be a bug. This typedef breaks a dependency cycle between the headers.
+typedef void * yyscan_t;
+
+#include <stdio.h>
+#include <string.h>
+#include "java.yacc.h"
+#include "java.lex.h"
+
+void yyerror(yyscan_t scanner, char * msg);
+%}
+
+%define api.pure full 
+%lex-param {yyscan_t scanner}
+%parse-param {yyscan_t scanner}
+
+%define api.push-pull push
+
+%union {
+  int int_value;
+  char * str_value;
+}
+
+%token <int_value> INT_TERM
+%token <str_value> STR_TERM
+%token COMMA
+%type  <int_value> int_non_term
+%type  <str_value> str_non_term
+
+%%
+
+complete : int_non_term str_non_term { printf(" === %d === %s === \n", $1, $2); }
+
+int_non_term : INT_TERM COMMA { $$ = $1; }
+str_non_term : STR_TERM COMMA { $$ = $1; }
+
+%%
+
+int main(int argc, char** argv) {
+  yyscan_t scanner;
+  FILE * input_file;
+
+  if (argc < 1) {
+    input_file = stdin;
+  } else {
+    if ( ! (input_file = fopen(argv[1], "r"))) {
+      fprintf(stderr, strerror(errno));
+      return errno;
+    }
+  }
+
+  yylex_init(&scanner) ;
+  yyset_debug(1, scanner);
+  yyset_in(input_file, scanner);
+  yydebug=1;
+
+  int status;
+  yypstate *ps = yypstate_new ();
+
+  YYSTYPE pushed_value;
+
+  do {
+    status = yypush_parse(ps, yylex(&pushed_value, scanner), &pushed_value, scanner);
+  } while(status == YYPUSH_MORE);
+
+  yypstate_delete (ps);
+  yylex_destroy (scanner) ;
+  return 0;
+}

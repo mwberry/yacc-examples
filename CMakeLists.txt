@@ -11,3 +11,7 @@ add_subdirectory(reentrant)
 # A more flexible example that doesn't require all the input to be availabile at once
 add_subdirectory(push)
 
+# A hybrid Java/JNI example
+add_subdirectory(java)
+
+
