@@ -5,3 +5,6 @@ project(yacc-examples)
 # A simple lexer/parser that communicate via a union and global variables
 add_subdirectory(union)
 
+# A more mature example that eschews globals for stateful structures
+add_subdirectory(reentrant)
+

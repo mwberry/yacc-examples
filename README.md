@@ -12,6 +12,14 @@ Union
 The first example is the canonical lex/yacc example. It uses a simple grammar, two terminals of which have
 semantic values passed around in a union.
 
+Reentrant
+---------
+
+Any program beyond the most simple or purpose-built will likely want to use a reentrant lexer/parser. Even
+if multithreading is not needed, it is just better coding practice to avoid globals and keep code self-
+contained. The same gammar and union type is used from the previous example, to make it obvious which
+declarations were changed solely to make the lexer/parser thread-safe.
+
 Building and Running
 ====================
 
@@ -29,6 +37,7 @@ $ cmake .
 
 $ make all
 [ 17%] Built target unionParser
+[ 35%] Built target reentrantParser
 ```
 
 Once built, each example is bundled with a sample input file (named `chat`) to parse. For the C-based 
@@ -44,3 +53,4 @@ $ ./union/bin/unionParser ./union/chat
 *Copyright notice:* 
 
 *Please see the COPYING file for information about the copyright restrictions for this repository.*
+

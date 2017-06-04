@@ -1,0 +1,3 @@
+/reentrant.lex.[ch]
+/reentrant.yacc.[ch]
+/reentrant.yacc.output
