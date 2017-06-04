@@ -20,6 +20,13 @@ if multithreading is not needed, it is just better coding practice to avoid glob
 contained. The same gammar and union type is used from the previous example, to make it obvious which
 declarations were changed solely to make the lexer/parser thread-safe.
 
+Push
+----
+
+If the input being parsed is not completelly locally buffered, then a push parser is needed. As more input
+arrives, it can be fed into the push-parser piecemeal until an accepting state is reached. This example
+is both reentrant and a push-parser, so it is actually apt for most C-based usages.
+
 Building and Running
 ====================
 
@@ -38,6 +45,7 @@ $ cmake .
 $ make all
 [ 17%] Built target unionParser
 [ 35%] Built target reentrantParser
+[ 53%] Built target pushParser
 ```
 
 Once built, each example is bundled with a sample input file (named `chat`) to parse. For the C-based 

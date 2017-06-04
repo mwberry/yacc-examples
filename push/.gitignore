@@ -1,0 +1,3 @@
+/push.lex.[ch]
+/push.yacc.[ch]
+/push.yacc.output
