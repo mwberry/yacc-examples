@@ -37,6 +37,14 @@ notice there are two Yacc files in this example. This is partially so a pure-C p
 aid in debugging, but partially because the lexer needs the YYSTYPE and tokends #define'd, which is done
 by Bison only if it is generating a C-based parser.
 
+Buffer
+------
+
+Flex is well equipped to read files by default. This examples shows how to read arbitrary memory buffers
+instead of reading files. It builds off of the Push example and generates a native binary, but it is 
+equally applicable to the Java use-case if desired.
+
+
 Building and Running
 ====================
 
@@ -57,12 +65,13 @@ javac 1.8.0_121
 $ cmake .
 
 $ make all
-[ 17%] Built target unionParser
-[ 35%] Built target reentrantParser
-[ 53%] Built target pushParser
-[ 67%] Built target javalexer
-[ 85%] Built target nativeparser
-[100%] Built target javaparser
+[ 15%] Built target unionParser
+[ 30%] Built target reentrantParser
+[ 45%] Built target pushParser
+[ 57%] Built target javalexer
+[ 72%] Built target nativeparser
+[ 84%] Built target javaparser
+[100%] Built target bufferParser
 ```
 
 Once built, each example is bundled with a sample input file (named `chat`) to parse. For the C-based 
@@ -83,6 +92,13 @@ $ java \
     -Djava.library.path=./java/lib \
     com.mwberry.yacc.examples.YYParser \
     ./java/com/mwberry/yacc/examples/chat
+```
+
+The Buffer example does not read an input file, so the invocation does not require the `chat` file.
+
+```bash
+$ make bufferParser
+$ ./buffer/bin/bufferParser
 ```
 
 ------

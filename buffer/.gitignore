@@ -1,0 +1,3 @@
+/buffer.lex.[ch]
+/buffer.yacc.[ch]
+/buffer.yacc.output

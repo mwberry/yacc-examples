@@ -14,4 +14,7 @@ add_subdirectory(push)
 # A hybrid Java/JNI example
 add_subdirectory(java)
 
+# An example that reads from memory buffers instead of files
+add_subdirectory(buffer)
+
 
